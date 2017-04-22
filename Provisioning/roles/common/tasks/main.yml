@@ -1,0 +1,13 @@
+---
+# RedHat CentOS
+- name: Setup RHEL family.
+  when: "ansible_os_family == 'RedHat'"
+  include: rhel/repository.yml
+
+- name: Setup RHEL family.
+  when: "ansible_os_family == 'RedHat'"
+  include: rhel/common.yml
+  
+- name: Setup RHEL family.
+  when: "ansible_os_family == 'RedHat'"
+  include: rhel/disable-selinux.yml

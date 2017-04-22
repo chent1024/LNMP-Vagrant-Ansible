@@ -1,0 +1,7 @@
+---
+nginx_user: nginx
+project_root: /prj
+document_root: /prj/public
+http_port: 80
+https_port: 443
+phpfpm_socket: /var/run/php-fpm.sock

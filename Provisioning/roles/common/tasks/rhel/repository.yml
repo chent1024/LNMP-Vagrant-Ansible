@@ -1,0 +1,10 @@
+---
+- name: Add EPEL
+  yum:
+    name='epel-release'
+    state=present
+
+- name: Add Remi
+  copy:
+    src: remi.repo
+    dest: /etc/yum.repos.d/

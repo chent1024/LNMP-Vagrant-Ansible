@@ -1,0 +1,20 @@
+---
+- name: Install Nginx
+  yum:
+    name=nginx
+    state=latest
+
+- name: Copy setting
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+
+- name: Setting default server
+  template:
+    src: default.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+
+- name: Enable Service
+  service:
+    name: nginx
+    enabled: yes

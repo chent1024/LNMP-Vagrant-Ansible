@@ -1,0 +1,9 @@
+---
+- name: Update Packages
+  yum: name='*' state=latest
+
+- name: Install Base Packaes
+  yum: name="@Base" state=present
+
+- name: Install Development tools Packaes
+  yum: name="@Development tools" state=present

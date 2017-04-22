@@ -1,0 +1,23 @@
+---
+- name: Open Port http
+  register: result_1
+  firewalld:
+    port: "{{http_port}}/tcp"
+    permanent: true
+    state: enabled
+    zone: public
+
+- name: Open Port https
+  register: result_2
+  firewalld:
+    port: "{{https_port}}/tcp"
+    permanent: true
+    state: enabled
+    zone: public
+
+- name: Reload firewalld
+  when: result_1.changed or result_2.changed
+  service:
+    name: firewalld
+    state: reloaded
+    enabled: yes

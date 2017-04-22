@@ -1,0 +1,36 @@
+---
+- name: Install mariadb
+  yum:
+    name: "{{ item }}"
+    state: present
+    enablerepo: "remi,remi-php71"
+  with_items:
+    - mariadb-server
+    - mariadb
+    - mariadb-libs
+
+- name: Setting /etc/my.cnf
+  copy:
+    src: my.cnf
+    dest: /etc/my.cnf
+
+- name: Setting /etc/my.cnf.d/client.cnf
+  copy:
+    src: client.cnf
+    dest: /etc/my.cnf.d/client.cnf
+
+- name: Setting /etc/my.cnf.d/server.cnf
+  copy:
+    src: server.cnf
+    dest: /etc/my.cnf.d/server.cnf
+
+- name: Setting /etc/my.cnf.d/mysql-clients.cnf
+  copy:
+    src: mysql-clients.cnf
+    dest: /etc/my.cnf.d/mysql-clients.cnf
+
+- name: Enable Service
+  service:
+    name: mariadb
+    enabled: yes
+    state: started

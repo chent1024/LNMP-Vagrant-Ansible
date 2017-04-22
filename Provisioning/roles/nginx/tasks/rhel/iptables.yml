@@ -1,0 +1,29 @@
+---
+- name: Open Port http
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    match: tcp
+    ctstate: NEW
+    destination_port: "{{http_port}}"
+    jump: ACCEPT
+
+- name: Open Port https
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    match: tcp
+    ctstate: NEW
+    destination_port: "{{https_port}}"
+    jump: ACCEPT
+
+- name: Save iptables
+  service:
+    name: iptables
+    arguments: save
+
+- name: Reload iptables
+  service:
+    name: iptables
+    state: reloaded
+    enabled: yes
