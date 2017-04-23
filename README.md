@@ -25,5 +25,5 @@
         - php-mysqlnd
         - php-soap
         - php-devel
-- Setting web-server (See Provisioning/all file)
+- Setting web-server (See Provisioning/group_vars/all file)
 - Firewalld setting
