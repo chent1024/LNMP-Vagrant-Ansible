@@ -1,7 +1,25 @@
 ---
+- name: Get SELinux Mode
+  shell: getenforce
+  register: selinux_status
+  changed_when: False
+
 - name: Install libselinux-python
   yum: name=libselinux-python state=present
+  when: selinux_status.stdout == 'Enforcing'
 
 - name: Disable SElinux
   selinux:
     state: disabled
+  when: selinux_status.stdout == 'Enforcing'
+
+- name: Reboot System
+  shell: "sleep 2 && reboot"
+  async: 1
+  poll: 0
+  when: selinux_status.stdout == 'Enforcing'
+
+- name: System boot up wait...
+  local_action: wait_for host={{ansible_ssh_host}} port={{ansible_ssh_port}} delay=30
+  become: false
+  when: selinux_status.stdout == 'Enforcing'

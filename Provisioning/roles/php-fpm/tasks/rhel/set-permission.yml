@@ -1,0 +1,9 @@
+---
+- name: Set PHP Directory Permission
+  file:
+    path: /var/lib/php
+    owner: "{{nginx_user}}"
+    group: "{{nginx_user}}"
+    mode: 770
+    recurse: yes
+    state: directory

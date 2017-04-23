@@ -11,3 +11,9 @@
 - name: Setup RHEL family.
   when: "ansible_os_family == 'RedHat'"
   include: rhel/disable-selinux.yml
+
+- name: Vagrant Cache dir
+  file:
+    path: /var/cache/yum/x86_64/7/base
+    state: directory
+  failed_when: false

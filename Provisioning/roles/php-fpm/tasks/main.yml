@@ -2,4 +2,10 @@
 # RedHat CentOS
 - name: PHP-FPM RHEL family.
   when: "ansible_os_family == 'RedHat'"
-  include: rhel/install-remi71.yml
+  include: "{{item_include}}"
+  with_items:
+    - rhel/install-remi71.yml
+    - rhel/set-permission.yml
+    - enable-service.yml
+  loop_control:
+    loop_var: item_include

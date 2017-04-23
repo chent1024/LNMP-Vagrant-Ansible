@@ -19,71 +19,47 @@
       - php-soap
       - php-devel
 
-- name: Setting PHP
-  lineinfile:
+- name: Setting PHP.ini
+  replace:
     dest: /etc/php.ini
-    regexp: ';date.timezone ='
-    line: 'date.timezone = Asia/Tokyo'
+    regexp: '^;date.timezone =.*$'
+    replace: 'date.timezone = Asia/Tokyo'
 
-- name: Setting PHP
+- name: Setting PHP-FPM.ini
   lineinfile: 
     dest: /etc/php-fpm.d/www.conf
     state: present
-    regexp: '^user = apache'
+    regexp: '^user ='
     line: 'user = {{nginx_user}}'
 
-- name: Setting PHP
+- name: Setting PHP-FPM.ini
   lineinfile: 
     dest: /etc/php-fpm.d/www.conf
     state: present
-    regexp: '^group = apache'
+    regexp: '^group ='
     line: 'group = {{nginx_user}}'
 
-- name: Setting PHP
+- name: Setting PHP-FPM.ini
   lineinfile: 
     dest: /etc/php-fpm.d/www.conf
     state: present
-    regexp: '^listen = 127.0.0.1:9000'
+    regexp: '^listen ='
     line: 'listen = {{phpfpm_socket}}'
 
-- name: Setting PHP
-  lineinfile: 
+- name: Setting PHP-FPM.ini
+  replace: 
     dest: /etc/php-fpm.d/www.conf
-    regexp: ';listen.owner = nobody'
-    line: 'listen.owner = {{nginx_user}}'
+    regexp: '^;listen.owner =.*$'
+    replace: 'listen.owner = {{nginx_user}}'
 
-- name: Setting PHP
-  lineinfile: 
+- name: Setting PHP-FPM.ini
+  replace: 
     dest: /etc/php-fpm.d/www.conf
-    regexp: ';listen.group = nobody'
-    line: 'listen.group = {{nginx_user}}'
+    regexp: '^;listen.group =.*$'
+    replace: 'listen.group = {{nginx_user}}'
 
-- name: Setting PHP
-  lineinfile: 
+- name: Setting PHP-FPM.ini
+  replace: 
     dest: /etc/php-fpm.d/www.conf
-    regexp: ';listen.mode = 0660'
-    line: 'listen.mode = 0660'
-
-- name: set acl
-  acl:
-    path: /var/lib/php
-    entity: "{{nginx_user}}"
-    etype: user
-    permissions: rw
-    recursive: yes
-    state: present
-
-- name: set acl
-  acl:
-    path: /var/lib/php
-    entity: "{{nginx_user}}"
-    etype: group
-    permissions: rw
-    recursive: yes
-    state: present
-
-- name: Enable Service
-  service:
-    name: php-fpm
-    enabled: yes
-    state: started
+    regexp: '^;listen.mode =.*$'
+    replace: 'listen.mode = 0660'

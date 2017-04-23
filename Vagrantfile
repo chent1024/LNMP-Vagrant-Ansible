@@ -7,8 +7,9 @@
 # you're doing.
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
+  config.ssh.private_key_path = "keys/vagrant"
   ## Base Box File
-  config.vm.box = "centos/7"
+  config.vm.box = "centos7_base"
   ## Auto Update Box
   config.vm.box_check_update = false
 
@@ -50,12 +51,13 @@ Vagrant.configure("2") do |config|
     ]
   end
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "Provisioning/site.yml"
-  end
-
   ## cache
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "Provisioning/site.yml"
+    ansible.verbose = "v"
   end
 end

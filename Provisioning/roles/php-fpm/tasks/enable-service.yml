@@ -1,0 +1,7 @@
+---
+- name: Enable Service
+  service:
+    name: php-fpm
+    enabled: yes
+    state: started
+  notify: restart nginx
